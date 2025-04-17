@@ -28,7 +28,7 @@ resource "okta_app_oauth" "app_legacy_dev" {
   post_logout_redirect_uris  = ["https://example.com"]
   login_uri                  = "https://localhost:8443/login"
   token_endpoint_auth_method = "client_secret_basic"
-  consent_method             = "REQUIRED"
+  consent_method             = "TRUSTED"
   issuer_mode                = "ORG_URL"
   hide_web                   = false
   login_mode                 = "SPEC"
@@ -43,7 +43,7 @@ resource "okta_app_oauth" "app_legacy_int" {
   post_logout_redirect_uris  = ["https://example.com"]
   login_uri                  = "https://localhost:8443/login"
   token_endpoint_auth_method = "client_secret_basic"
-  consent_method             = "REQUIRED"
+  consent_method             = "TRUSTED"
   issuer_mode                = "ORG_URL"
   hide_web                   = false
   login_mode                 = "SPEC"
@@ -58,7 +58,7 @@ resource "okta_app_oauth" "app_legacy_qa" {
   post_logout_redirect_uris  = ["https://example.com"]
   login_uri                  = "https://localhost:8443/login"
   token_endpoint_auth_method = "client_secret_basic"
-  consent_method             = "REQUIRED"
+  consent_method             = "TRUSTED"
   issuer_mode                = "ORG_URL"
   hide_web                   = false
   login_mode                 = "SPEC"

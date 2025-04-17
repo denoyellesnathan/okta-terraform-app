@@ -8,8 +8,6 @@
 # User-specific stuff
 .terraform
 *.terraform.*
-*.tfstate
-*.tfstate.*
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml

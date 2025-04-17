@@ -8,11 +8,11 @@ terraform {
 }
 
 provider "okta" {
-  org_name    = "dev-76952744"
-  base_url    = "okta.com"
-  client_id   = "0oaobyawnytbnmJxo5d7"
-  scopes      = ["okta.groups.manage", "okta.apps.manage", "okta.policies.read"]
-  private_key = "okta.pem"
+  org_name    = var.org_name
+  base_url    = var.base_url
+  client_id   = var.client_id
+  scopes      = var.scopes
+  private_key = var.private_key
 }
 
 resource "okta_group" "app_legacy" {

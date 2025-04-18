@@ -15,67 +15,29 @@ provider "okta" {
   private_key = var.private_key
 }
 
+# This resource defines an Okta group for legacy users associated with the application.
+# The group name is dynamically generated using the `app_name` variable, appended with "_LEGACY_USERS_PR".
+# This group can be used to manage access control or permissions for legacy users of the application.
 resource "okta_group" "app_legacy" {
-  name = "APP_LEGACY_USERS_PR"
+  name = "${var.app_name}_LEGACY_USERS_PR"
 }
 
-resource "okta_app_oauth" "app_legacy_dev" {
-  label                      = "APP Legacy DEV"
-  type                       = "web"
-  grant_types                = ["authorization_code", "refresh_token"]
-  redirect_uris              = ["https://example.com/oauth2/callback"]
-  response_types             = ["code"]
-  post_logout_redirect_uris  = ["https://example.com"]
-  login_uri                  = "https://localhost:8443/login"
-  token_endpoint_auth_method = "client_secret_basic"
-  consent_method             = "TRUSTED"
-  issuer_mode                = "ORG_URL"
-  hide_web                   = false
-  login_mode                 = "SPEC"
-}
-
-resource "okta_app_oauth" "app_legacy_int" {
-  label                      = "APP Legacy INT"
-  type                       = "web"
-  grant_types                = ["authorization_code", "refresh_token"]
-  redirect_uris              = ["https://example.com/oauth2/callback"]
-  response_types             = ["code"]
-  post_logout_redirect_uris  = ["https://example.com"]
-  login_uri                  = "https://localhost:8443/login"
-  token_endpoint_auth_method = "client_secret_basic"
-  consent_method             = "TRUSTED"
-  issuer_mode                = "ORG_URL"
-  hide_web                   = false
-  login_mode                 = "SPEC"
-}
-
-resource "okta_app_oauth" "app_legacy_qa" {
-  label                      = "APP Legacy QA"
-  type                       = "web"
-  grant_types                = ["authorization_code", "refresh_token"]
-  redirect_uris              = ["https://example.com/oauth2/callback"]
-  response_types             = ["code"]
-  post_logout_redirect_uris  = ["https://example.com"]
-  login_uri                  = "https://localhost:8443/login"
-  token_endpoint_auth_method = "client_secret_basic"
-  consent_method             = "TRUSTED"
-  issuer_mode                = "ORG_URL"
-  hide_web                   = false
-  login_mode                 = "SPEC"
-  depends_on                 = [okta_group.app_legacy]
-}
-
-resource "okta_app_group_assignment" "app_legacy_group_assignment" {
-  app_id   = okta_app_oauth.app_legacy_dev.id
-  group_id = okta_group.app_legacy.id
-}
-
-resource "okta_app_group_assignment" "app_legacy_int_group_assignment" {
-  app_id   = okta_app_oauth.app_legacy_int.id
-  group_id = okta_group.app_legacy.id
-}
-
-resource "okta_app_group_assignment" "app_legacy_qa_group_assignment" {
-  app_id   = okta_app_oauth.app_legacy_qa.id
-  group_id = okta_group.app_legacy.id
+# This module configures an Okta OAuth application with the specified parameters.
+# 
+# Arguments:
+# - `source`: Specifies the path to the Okta OAuth module.
+# - `app_name`: The name of the application to be created in Okta. This is passed as a variable.
+# - `callback_url`: The callback URL for the OAuth application. This is passed as a variable.
+# - `login_url`: The login URL for the OAuth application. This is passed as a variable.
+# - `group_id`: The ID of the Okta group to associate with the application. This is derived from the `okta_group.app_legacy.id` resource.
+#
+# Usage:
+# Ensure that the `var.app_name`, `var.callback_url`, and `var.login_url` variables are defined in your Terraform configuration.
+# The `okta_group.app_legacy` resource must also be defined to provide the group ID.
+module "app_legacy_oauth" {
+  source       = "./modules/okta_app_oauth"
+  app_name     = var.app_name
+  callback_url = var.callback_url
+  login_url    = var.login_url
+  group_id     = okta_group.app_legacy.id
 }

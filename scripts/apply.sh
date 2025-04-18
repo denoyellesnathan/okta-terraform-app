@@ -10,4 +10,4 @@ if [ -z "$ENVIRONMENT" ]; then
 fi
 
 # Use the parameter to dynamically create the command
-terraform apply -var-file=env/${ENVIRONMENT}.tfvars
+terraform apply -refresh=false plan.tfplan

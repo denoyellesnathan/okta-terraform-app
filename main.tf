@@ -8,11 +8,12 @@ terraform {
 }
 
 provider "okta" {
-  org_name    = var.org_name
-  base_url    = var.base_url
-  client_id   = var.client_id
-  scopes      = var.scopes
-  private_key = var.private_key
+  org_name         = var.org_name
+  base_url         = var.base_url
+  client_id        = var.client_id
+  scopes           = var.scopes
+  private_key      = var.private_key
+  max_api_capacity = 50
 }
 
 # This resource defines an Okta group for legacy users associated with the application.

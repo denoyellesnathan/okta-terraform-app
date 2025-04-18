@@ -1,33 +1,31 @@
 # Okta Terraform App
 
-This project is designed to manage Okta resources using Terraform. It provides a streamlined way to configure and deploy Okta applications, groups, and other resources as code.
+This project is designed to manage Okta resources using Terraform. It provides a streamlined way to configure and deploy Okta applications, users, groups, and other resources as code.
 
 ## Features
 
-- Automates the management of Okta resources.
-- Uses Terraform for infrastructure as code.
-- Supports version control for Okta configurations.
+- Automates the provisioning of Okta resources.
+- Supports version-controlled infrastructure as code.
+- Simplifies management of Okta applications and configurations.
 
 ## Prerequisites
 
 - [Terraform](https://www.terraform.io/downloads.html) installed on your system.
 - An Okta account with API access.
-- Terraform Okta provider configured.
+- An Okta API token.
 
 ## Setup
 
-1. Clone the repository:
+1. Clone this repository:
    ```bash
    git clone https://github.com/your-repo/okta-terraform-app.git
    cd okta-terraform-app
    ```
 
-2. Configure your Okta provider in `main.tf`:
+2. Configure your Okta provider in `env/*.tfvars`:
    ```hcl
-   provider "okta" {
-     org_name  = "your-okta-org"
-     api_token = "your-api-token"
-   }
+   okta_org_name = "your-okta-org"
+   okta_api_token = "your-api-token"
    ```
 
 3. Initialize Terraform:
@@ -35,23 +33,17 @@ This project is designed to manage Okta resources using Terraform. It provides a
    terraform init
    ```
 
-4. Plan and apply your changes:
+4. Plan and apply the configuration:
    ```bash
-   terraform plan
-   terraform apply
+   make plan
+   make apply
    ```
 
-## Project Structure
+## File Structure
 
-- `.gitignore`: Specifies files and directories to be ignored by Git.
 - `main.tf`: Main Terraform configuration file.
-- `variables.tf`: Defines input variables for the Terraform configuration.
-- `outputs.tf`: Defines outputs for the Terraform configuration.
-
-## Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request.
+- `variables.tf`: Defines input variables for the project.
 
 ## License
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

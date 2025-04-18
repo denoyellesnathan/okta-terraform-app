@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    okta = {
+      source  = "okta/okta"
+      version = "~> 4.16.0"
+    }
+  }
+}
+
 resource "okta_app_oauth" "app_legacy_dev" {
   label                      = "${var.app_name} Legacy DEV"
   type                       = "web"

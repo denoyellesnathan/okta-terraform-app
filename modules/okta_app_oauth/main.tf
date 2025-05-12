@@ -7,6 +7,11 @@ terraform {
   }
 }
 
+data "okta_policy" "mfa_policy" {
+  name = "Any two factors"
+  type = "ACCESS_POLICY"
+}
+
 resource "okta_app_oauth" "app_legacy_dev" {
   label                      = "${var.app_name} Legacy DEV"
   type                       = "web"
@@ -20,6 +25,7 @@ resource "okta_app_oauth" "app_legacy_dev" {
   issuer_mode                = "ORG_URL"
   hide_web                   = false
   login_mode                 = "SPEC"
+  authentication_policy      = data.okta_policy.mfa_policy.id
 }
 
 resource "okta_app_oauth" "app_legacy_int" {
@@ -35,6 +41,7 @@ resource "okta_app_oauth" "app_legacy_int" {
   issuer_mode                = "ORG_URL"
   hide_web                   = false
   login_mode                 = "SPEC"
+  authentication_policy      = data.okta_policy.mfa_policy.id
 }
 
 resource "okta_app_oauth" "app_legacy_qa" {
@@ -50,6 +57,7 @@ resource "okta_app_oauth" "app_legacy_qa" {
   issuer_mode                = "ORG_URL"
   hide_web                   = false
   login_mode                 = "SPEC"
+  authentication_policy      = data.okta_policy.mfa_policy.id
 }
 
 resource "okta_app_group_assignment" "app_legacy_dev_group_assignment" {

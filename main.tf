@@ -42,3 +42,13 @@ module "app_legacy_oauth" {
   login_url    = var.login_url
   group_id     = okta_group.app_legacy.id
 }
+
+module "okta_auth_server" {
+  source = "./modules/okta_auth_server"
+  name                = "SERFF Legacy Auth Server"
+  description         = "Authorization server for SERFF Legacy"
+  audiences           = ["serff.com"]
+  app_legacy_group_id = okta_group.app_legacy.id
+  depends_on = [ module.app_legacy_oauth ]
+  client_whitelist = module.app_legacy_oauth.okta_app_ids
+}

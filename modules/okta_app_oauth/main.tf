@@ -74,3 +74,12 @@ resource "okta_app_group_assignment" "app_legacy_qa_group_assignment" {
   app_id   = okta_app_oauth.app_legacy_qa.id
   group_id = var.group_id
 }
+
+output "okta_app_ids" {
+  value = [
+    okta_app_oauth.app_legacy_dev.id,
+    okta_app_oauth.app_legacy_int.id,
+    okta_app_oauth.app_legacy_qa.id
+  ]
+  description = "List of Okta application IDs for the legacy applications"
+}
